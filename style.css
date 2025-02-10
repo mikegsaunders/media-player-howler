@@ -1,0 +1,260 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined");
+
+/* General Page Styling */
+body {
+  font-family: "Open Sans", sans-serif;
+  background-color: #121212;
+  color: white;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Main Music Player Container (Forces Side-by-Side Layout) */
+#audio-player {
+  /* width: 800px; */
+  background-color: #1e1e1e;
+  border-radius: 12px;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: space-between;
+
+  position: relative;
+  /* left: 50%; */
+  /* transform: translateX(-50%); Ensures horizontal centering */
+}
+
+/* Playlist Section */
+.playlist {
+  width: 30%; /* 30% of the player width */
+  padding: 16px;
+  border-right: 1px solid #2a2a2a;
+}
+
+.playlist h3 {
+  font-size: 20px;
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+.track {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background 0.3s;
+}
+
+.track:hover {
+  background-color: #2a2a2a;
+}
+
+.track span {
+  font-size: 18px;
+  margin-right: 8px;
+  /* opacity: 0; */
+  transition: opacity 0.2s;
+}
+
+/* .track:hover span {
+  opacity: 1;
+} */
+
+.track-info p {
+  margin: 0;
+}
+
+.track-duration {
+  margin-left: auto;
+  font-size: 14px;
+  color: #aaa;
+}
+
+/* Album Section (Expands to Fill Remaining Space) */
+.album {
+  flex-grow: 1; /* Takes up remaining space */
+  padding: 16px;
+  display: flex;
+  flex-direction: column; /* Stack album info + controls */
+  justify-content: space-between;
+}
+
+/* Album Details */
+.details {
+  display: flex; /* Ensures image + info sit side by side */
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.album img {
+  width: 140px;
+  height: 140px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.info {
+  margin-left: 16px;
+}
+
+.album h2 {
+  font-size: 22px;
+  margin: 0;
+}
+
+.album p {
+  color: #aaa;
+  font-size: 16px;
+  margin: 8px 0;
+}
+
+/* Play Button (Better Visibility & Hover Effect) */
+.play-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #8a4bff;
+  color: white;
+  border: 2px solid #8a4bff;
+  padding: 12px 24px;
+  border-radius: 24px;
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+  text-transform: none; /* Ensures text is not uppercase */
+}
+
+/* Invert Colors on Hover */
+.play-button:hover {
+  background: white;
+  color: #8a4bff;
+}
+
+/* Ensure Icon Matches Text Color */
+.play-button span {
+  font-size: 24px;
+  margin-right: 8px;
+  transition: color 0.3s ease-in-out;
+}
+
+/* Invert Icon Color on Hover */
+.play-button:hover span {
+  color: #8a4bff;
+}
+
+/* Progress Bar */
+.progress-container {
+  margin-top: 10px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 5px;
+  background: linear-gradient(
+    to right,
+    #8a4bff var(--progress, 0%),
+    #444 var(--progress, 0%)
+  );
+  border-radius: 5px;
+  appearance: none;
+  outline: none;
+  transition: background 0.3s ease-in-out;
+}
+
+.progress-bar::-webkit-slider-thumb {
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  background: #8a4bff;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* Playback Controls */
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.controls button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 28px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.controls button:hover {
+  color: #8a4bff;
+}
+
+.material-symbols-outlined {
+  font-size: inherit;
+  line-height: 2;
+}
+
+/* Volume Control (Aligned with Play Button) */
+.volume-control {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Volume Icon */
+.volume-icon {
+  font-size: 24px;
+  color: white;
+  transition: color 0.3s ease-in-out;
+}
+
+/* Volume Slider */
+.volume-slider {
+  width: 100px;
+  appearance: none;
+  height: 4px;
+  background: #444;
+  border-radius: 5px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+/* Volume Slider Thumb */
+.volume-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  background: #8a4bff;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.time-display {
+  font-size: 14px;
+  color: #aaa;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+/* Highlight the currently playing track */
+.playing-track {
+  background-color: #8a4bff; /* Highlight color */
+  color: white;
+  border-radius: 6px;
+}
+
+.playing-track .track-duration {
+  color: white; /* Ensure the duration text is visible */
+}
