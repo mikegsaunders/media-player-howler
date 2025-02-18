@@ -2,27 +2,32 @@ const tracks = [
   {
     title: "In a Mountain Forest in Northern Greece, May",
     artist: "Jean C. Roché",
-    url: "examples\\S-SOC-CD-089_D1_f01_v1.m4a",
+    // url: "examples\\S-SOC-CD-089_D1_f01_v1.m4a",
+    url: "https://github.com/mikegsaunders/media-player-howler/raw/main/examples/S-SOC-CD-089_D1_f01_v1.m4a",
   },
   {
     title: "Woodland Edge In Bourgogne, May",
     artist: "Jean C. Roché",
-    url: "examples\\S-SOC-CD-089_D1_f02_v1.m4a",
+    // url: "examples\\S-SOC-CD-089_D1_f02_v1.m4a",
+    url: "https://github.com/mikegsaunders/media-player-howler/raw/main/examples/S-SOC-CD-089_D1_f02_v1.m4a",
   },
   {
     title: "In a Small Copse in An Alpine Valley, June",
     artist: "Jean C. Roché",
-    url: "examples\\S-SOC-CD-089_D1_f03_v1.m4a",
+    // url: "examples\\S-SOC-CD-089_D1_f03_v1.m4a",
+    url: "https://github.com/mikegsaunders/media-player-howler/raw/main/examples/S-SOC-CD-089_D1_f03_v1.m4a",
   },
   {
     title: "A Wood On The Ile de France, June",
     artist: "Jean C. Roché",
-    url: "examples\\S-SOC-CD-089_D1_f04_v1.m4a",
+    // url: "examples\\S-SOC-CD-089_D1_f04_v1.m4a",
+    url: "https://github.com/mikegsaunders/media-player-howler/raw/main/examples/S-SOC-CD-089_D1_f04_v1.m4a",
   },
   {
     title: "At The Edge Of A Small Lake, Bresse, June",
     artist: "Jean C. Roché",
-    url: "examples\\S-SOC-CD-089_D1_f05_v1.m4a",
+    // url: "examples\\S-SOC-CD-089_D1_f05_v1.m4a",
+    url: "https://github.com/mikegsaunders/media-player-howler/raw/main/examples/S-SOC-CD-089_D1_f05_v1.m4a",
   },
 ];
 
@@ -157,7 +162,8 @@ function createMusicPlayer() {
   const albumImage = document.createElement("img");
   albumImage.src =
     tracks[currentTrackIndex].cover ||
-    "examples\\S-SOC-CD-089_D1_eng_x1.jpg" ||
+    "https://github.com/mikegsaunders/media-player-howler/raw/main/examples/S-SOC-CD-089_D1_eng_x1.jpg" ||
+    // "examples\\S-SOC-CD-089_D1_eng_x1.jpg" ||
     "https://placehold.co/200x200";
   albumImage.alt = "Album Art";
 
@@ -398,3 +404,8 @@ function formatTime(seconds) {
 
 // === Start Player on Page Load ===
 document.addEventListener("DOMContentLoaded", createMusicPlayer);
+
+pdf_html = `<iframe src="https://docs.google.com/viewer?url=https://github.com/mikegsaunders/media-player-howler/raw/main/examples/S-SOC-CD-089_D1_CD-Booklet_eng.pdf&amp;embedded=true" width="75%" height="500px">
+</iframe>`;
+
+icons_css = `<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />`;
