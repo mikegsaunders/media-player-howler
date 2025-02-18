@@ -445,7 +445,9 @@ async function loadCueFile(cueFileUrl) {
 // with mp3s:
 // document.addEventListener("DOMContentLoaded", createMusicPlayer);
 // with wav single file:
-loadCueFile("https://example.com/album.cue");
+loadCueFile(
+  "https://github.com/mikegsaunders/media-player-howler/raw/main/wav/S-SOC-CD-089.cue"
+);
 
 pdf_html = `<iframe src="https://docs.google.com/viewer?url=https://github.com/mikegsaunders/media-player-howler/raw/main/examples/S-SOC-CD-089_D1_CD-Booklet_eng.pdf&amp;embedded=true" width="75%" height="500px">
 </iframe>`;
