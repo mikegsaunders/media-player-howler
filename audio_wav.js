@@ -1,10 +1,3 @@
-let currentTrackIndex = 0;
-let sound = null;
-let isPlaying = false;
-let progressInterval = null;
-let cueData = null;
-let isCueFile = false;
-
 // CUE Parser Class
 class CueParser {
   constructor(cueContent) {
@@ -78,6 +71,14 @@ class CueParser {
     };
   }
 }
+const tracks = []; // This will be used for non-CUE tracks
+
+let currentTrackIndex = 0;
+let sound = null;
+let isPlaying = false;
+let progressInterval = null;
+let cueData = null;
+let isCueFile = false;
 
 function createMusicPlayer() {
   const container = document.createElement("div");
@@ -154,20 +155,30 @@ function createMusicPlayer() {
 
   const albumImage = document.createElement("img");
   albumImage.src =
-    tracks[currentTrackIndex].cover ||
-    "https://github.com/mikegsaunders/media-player-howler/raw/main/examples/S-SOC-CD-089_D1_eng_x1.jpg" ||
-    // "examples\\S-SOC-CD-089_D1_eng_x1.jpg" ||
+    (isCueFile ? cueData.metadata.cover : tracks[currentTrackIndex].cover) ||
     "https://placehold.co/200x200";
   albumImage.alt = "Album Art";
+
+  // Make album image clickable if PDF exists
+  if (isCueFile && cueData.metadata.pdf) {
+    albumImage.style.cursor = "pointer";
+    albumImage.addEventListener("click", () => {
+      window.open(cueData.metadata.pdf, "_blank");
+    });
+  }
 
   const albumInfo = document.createElement("div");
   albumInfo.classList.add("info");
 
   const albumTitle = document.createElement("h2");
-  albumTitle.textContent = "A Nocturne Of Nightingales" || "Album Title";
+  albumTitle.textContent = isCueFile
+    ? cueData.metadata.title
+    : "A Nocturne Of Nightingales" || "Album Title";
 
   const albumArtist = document.createElement("p");
-  albumArtist.textContent = "Jean C. Roché" || "Artist Name";
+  albumArtist.textContent = isCueFile
+    ? cueData.metadata.performer
+    : "Jean C. Roché" || "Artist Name";
 
   const nowPlaying = document.createElement("p");
   nowPlaying.id = "now-playing";
@@ -269,7 +280,35 @@ function createMusicPlayer() {
 
   container.appendChild(playlistDiv);
   container.appendChild(albumDiv);
-  document.body.appendChild(container);
+
+  const audioPlayerContainer = document.getElementById(
+    "audio-player-container"
+  );
+  audioPlayerContainer.appendChild(container);
+
+  // Create track elements after appending to the DOM
+  createTrackElements();
+
+  // Embed PDF if it exists
+  if (isCueFile && cueData.metadata.pdf) {
+    const pdfContainer = document.createElement("div");
+    pdfContainer.classList.add("pdf-container");
+
+    const pdfIframe = document.createElement("iframe");
+    pdfIframe.src =
+      "https://docs.google.com/viewer?url=https://github.com/mikegsaunders/media-player-howler/raw/main/examples/S-SOC-CD-089_D1_CD-Booklet_eng.pdf&embedded=true";
+    // pdfIframe.src = `https://docs.google.com/viewer?url=${cueData.metadata.pdf}&embedded=true`;
+    pdfIframe.width = "100%";
+    pdfIframe.height = "500px";
+
+    pdfIframe.onerror = () => {
+      pdfContainer.innerHTML =
+        "<p>Failed to load PDF. No preview available.</p>";
+    };
+
+    pdfContainer.appendChild(pdfIframe);
+    audioPlayerContainer.appendChild(pdfContainer);
+  }
 }
 
 // === Play/Pause Functions using Howler.js ===
@@ -335,12 +374,18 @@ function togglePlay() {
 }
 
 function playPrevious() {
-  currentTrackIndex = (currentTrackIndex - 1 + tracks.length) % tracks.length;
+  currentTrackIndex =
+    (currentTrackIndex -
+      1 +
+      (isCueFile ? cueData.tracks.length : tracks.length)) %
+    (isCueFile ? cueData.tracks.length : tracks.length);
   playTrack(currentTrackIndex);
 }
 
 function playNext() {
-  currentTrackIndex = (currentTrackIndex + 1) % tracks.length;
+  currentTrackIndex =
+    (currentTrackIndex + 1) %
+    (isCueFile ? cueData.tracks.length : tracks.length);
   playTrack(currentTrackIndex);
 }
 
@@ -376,7 +421,11 @@ function updateUI() {
 
   if (nowPlayingText) {
     if (isPlaying) {
-      nowPlayingText.textContent = `Currently Playing: ${tracks[currentTrackIndex].title}`;
+      nowPlayingText.textContent = `Currently Playing: ${
+        isCueFile
+          ? cueData.tracks[currentTrackIndex].title
+          : tracks[currentTrackIndex].title
+      }`;
       nowPlayingText.style.display = "block";
     } else {
       nowPlayingText.style.display = "none";
@@ -433,6 +482,14 @@ async function loadCueFile(cueFileUrl) {
     cueData.metadata.filename = wavFileUrl;
     isCueFile = true;
 
+    // Attempt to load cover image from the same folder
+    const coverImageUrl = cueFileUrl.replace(/\.cue$/i, ".jpg");
+    cueData.metadata.cover = coverImageUrl;
+
+    // Attempt to load PDF from the same folder
+    const pdfUrl = cueFileUrl.replace(/\.cue$/i, ".pdf");
+    cueData.metadata.pdf = pdfUrl;
+
     // Recreate the player with CUE data
     document.getElementById("audio-player")?.remove();
     createMusicPlayer();
@@ -445,11 +502,6 @@ async function loadCueFile(cueFileUrl) {
 // with mp3s:
 // document.addEventListener("DOMContentLoaded", createMusicPlayer);
 // with wav single file:
-loadCueFile(
-  "https://github.com/mikegsaunders/media-player-howler/raw/main/wav/S-SOC-CD-089.cue"
-);
-
-pdf_html = `<iframe src="https://docs.google.com/viewer?url=https://github.com/mikegsaunders/media-player-howler/raw/main/examples/S-SOC-CD-089_D1_CD-Booklet_eng.pdf&amp;embedded=true" width="75%" height="500px">
-</iframe>`;
+loadCueFile("http://127.0.0.1:5500/wav/S-SOC-CD-089.cue");
 
 icons_css = `<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />`;

@@ -11,7 +11,6 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
 }
 
 /* Main Music Player Container (Forces Side-by-Side Layout) */
@@ -37,6 +36,27 @@ body {
   width: 30%; /* 30% of the player width */
   padding: 16px;
   border-right: 1px solid #2a2a2a;
+  max-height: calc(5 * 60px + 32px); /* 5 tracks * 60px height + padding */
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+
+/* Custom Scrollbar Styling */
+.playlist::-webkit-scrollbar {
+  width: 8px;
+}
+
+.playlist::-webkit-scrollbar-track {
+  background: #2a2a2a;
+  border-radius: 4px;
+}
+
+.playlist::-webkit-scrollbar-thumb {
+  background: #8a4bff;
+  border-radius: 4px;
+}
+
+.playlist::-webkit-scrollbar-thumb:hover {
+  background: #6a3bcc;
 }
 
 .playlist h3 {
